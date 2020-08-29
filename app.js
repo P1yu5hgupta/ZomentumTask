@@ -10,7 +10,7 @@ const app = express();
 
 // Connect to Database
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/test', { useNewUrlParser: true } ,(error) =>{
+mongoose.connect('mongodb://localhost:27017/ZomentumTask', { useNewUrlParser: true } ,(error) =>{
   if(error){
     console.log("Error connecting to Database");
   }

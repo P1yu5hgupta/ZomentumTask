@@ -1,22 +1,53 @@
 const Ticket = require('../models/ticket.model');
-const User = require('../models/user.model');
-const Show = require('../models/user.model');
+const mongoose = require('mongoose');
+const Show = require('../models/show.model');
 
-exports.bookTickets = function(req,res){
-    // Creating new User for getting the reference to the ticket schema
-    var user = new User;
-    user.username=req.body.username;
-    user.phone=req.body.phone;
-    user.save();
-    // User is Created
+exports.bookTickets = async (req,res) => {
+
+    var response,ticketDetails;
     
-    // Find the show which user want to book the ticket of
-    var show = Show 
+    // Find the show which user want to book the ticket of (checking if that show is available or not)
+    const query={startTime: req.body.startTiming, endTime: req.body.endTiming , date: req.body.date};
+    await Show.findOne(query, (err , result) => {
+        if(err)
+            throw err;
+        console.log(result);
+        if(result==undefined){
+            response = "Show not Available";
+        }
+        else if(result.seatAvailable==0){
+            response = "Housefull !! Try for another show";
+        }
+        else{
+            // Update the seats available for that show
+            Show.updateOne(query,{seatAvailable: result.seatAvailable-1},(err,docs)=>{
+                if(err)
+                    throw err;
+            });
 
-    // Generate Ticket
-    var newTicket = new Ticket;
-    newTicket.bookingTime = Date.now();
-
-    return res.json({username: 'piyush', phone: req.body.phone,timing: req.body.timing});
+            // Generate the ticket and save in database
+            var newTicket = new Ticket;
+            newTicket.showRef = result._id;
+            newTicket.userDetails.username = req.body.username;
+            newTicket.userDetails.phone = req.body.phone;
+            newTicket.save();
+            
+            // Details of Ticket to be passed to User for later Changes
+            ticketDetails={
+                status: "Ticket Booked Sucessfully",
+                username: newTicket.userDetails.username,
+                phone: newTicket.userDetails.phone,
+                bookingTime: newTicket.bookingTime,
+                showStartTime: result.startTime,
+                showEndTime: result.endTime,
+                DateofShow: result.date
+            };
+            console.log(ticketDetails)
+        }
+    });
+    if(ticketDetails!=undefined)
+        return res.json(ticketDetails);
+    else
+        return res.send(response);
 };
 

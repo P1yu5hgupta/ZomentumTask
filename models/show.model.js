@@ -1,19 +1,20 @@
 const  Mongoose  = require("mongoose");
 
 var showSchema = new Mongoose.Schema({
+    // _id : Mongoose.Schema.Types.ObjectId,
     startTime: {
-        type: string,
+        type: String,
         required: 'Time is required'
     },
     endTime: {
-        type: string,
+        type: String,
         required: 'Time is required'
     },
     date: {
-        type: string,
+        type: String,
         required: 'Date is Required'
     },
-    seatAvailale: {
+    seatAvailable: {
         type: Number,
         default: 20
     }

@@ -9,9 +9,15 @@ var ticketSchema = new Mongoose.Schema({
         type: Mongoose.Schema.ObjectId,
         ref: 'Show'
     },
-    userRef: {
-        type: Mongoose.Schema.ObjectId,
-        ref: 'User'
+    userDetails: {
+        username: {
+            type: String,
+            required: 'UserName is required'
+        },
+        phone:{
+            type: Number,
+            required: 'Phone Number is required'
+        }
     }
 });
 
