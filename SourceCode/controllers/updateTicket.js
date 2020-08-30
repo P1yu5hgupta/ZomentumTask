@@ -28,7 +28,7 @@ exports.updateTicket = async (req,res) => {
     //Validation Completed
 
 
-    var response,updatedTicketDetails; // for storing response to be send to User
+    var updatedTicketDetails; // for storing response to be send to User
     
     // Find the show which user want to book the ticket of (checking if that show is available or not)
     const query={startTime: req.body.newStartTiming, endTime: req.body.newEndTiming , date: req.body.newDate};

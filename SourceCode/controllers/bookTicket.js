@@ -1,7 +1,7 @@
 const Ticket = require('../models/ticket.model');
-const mongoose = require('mongoose');
 const Show = require('../models/show.model');
 const uniqid = require('uniqid');
+const mongoose = require('mongoose');
 
 exports.bookTickets = async (req,res) => {
 
