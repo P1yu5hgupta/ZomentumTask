@@ -1,6 +1,9 @@
 const  Mongoose  = require('mongoose');
 
 var ticketSchema = new Mongoose.Schema({
+    ticketId: {
+        type: String
+    },
     bookingTime: {
         type: Date,
         default: Date.now

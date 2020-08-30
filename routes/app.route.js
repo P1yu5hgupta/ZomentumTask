@@ -9,11 +9,11 @@ const { updateTicket } = require('../controllers/updateTicket');
 
 router.post('/book', bookTickets ); // for booking the ticket
 
-router.get('/viewUser', viewUser ); // for viewing the user's details based on ticket ID
+router.post('/viewUser', viewUser ); // for viewing the user's details based on ticket ID
 
-router.get('/viewTickets', viewTickets ); //  for viewing the tickets of any particular time
+router.post('/viewTickets', viewTickets ); //  for viewing the tickets of any particular time
 
-router.delete('/delete', deleteTicket ); //  cancelling/deleting the ticket 
+router.post('/delete', deleteTicket ); //  cancelling/deleting the ticket 
 
 router.post('/update', updateTicket ); // to update any particular ticket timing
 

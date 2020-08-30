@@ -1,7 +1,19 @@
-exports.deleteTicket = function(req,res){
-    // var user = new User;
-    // user.username= 'piyushhhhh';
-    // user.phone = 4567890;
-    // user.save();
-    return res.json({username: 'piyush', phone: req.body.phone,timing: req.body.timing});
+const Ticket = require('../models/ticket.model');
+const mongoose = require('mongoose');
+const Show = require('../models/show.model');
+
+exports.deleteTicket = async (req,res) => {
+    Ticket.findOne({ticketId: req.body.ticketId},(err,result)=>{
+        if(err)
+            throw err;
+        if(result==null)
+            return res.send("**No ticket is available with such ID**")
+        Ticket.deleteOne({ticketId: req.body.ticketId},(err,ress)=>{
+            if(err)
+                throw err;
+            console.log(ress);
+            return res.send("**Ticket Deleted Success!!**");
+        });
+    });
 };
+

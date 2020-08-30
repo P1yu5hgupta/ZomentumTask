@@ -1,8 +1,21 @@
-exports.viewUser = function(req,res){
-    // var user = new User;
-    // user.username= 'piyushhhhh';
-    // user.phone = 4567890;
-    // user.save();
-    return res.json({username: 'piyush', phone: req.body.phone,timing: req.body.timing});
+const Ticket = require('../models/ticket.model');
+const mongoose = require('mongoose');
+const Show = require('../models/show.model');
+const uniqid = require('uniqid');
+
+exports.viewUser = async (req,res) => {
+    
+    Ticket.findOne({ticketId: req.body.ticketId},(err,result)=>{
+        if(err)
+            throw err;
+        if(res==null)
+            return res.send("**No Ticket available with such ID**");
+        console.log(result);
+        var userDetails={
+            username: result.userDetails.username,
+            phone: result.userDetails.phone
+        };
+        return res.json(userDetails);
+    });
 };
 
